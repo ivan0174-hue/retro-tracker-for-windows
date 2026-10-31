@@ -163,7 +163,10 @@ static int clampi(int v, int lo, int hi) { return v < lo ? lo : (v > hi ? hi : v
 
 static void setStatus(const char *msg, bool err)
 {
-    snprintf(status, sizeof status, "%s", msg);
+    size_t n = strlen(msg);
+    if (n > sizeof status - 1) n = sizeof status - 1;   /* status line shows at most 95 chars */
+    memcpy(status, msg, n);
+    status[n] = 0;
     statusErr = err;
     statusTime = now ? now : plat_ms();
 }

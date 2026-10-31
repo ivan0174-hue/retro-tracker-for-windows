@@ -787,7 +787,7 @@ void sample_install(int idx, const RawSample *rs, int targetRate)
     s->data = d;
     s->length = alloc;
     memset(s->name, 0, sizeof(s->name));
-    strncpy(s->name, rs->name, 22);
+    memcpy(s->name, rs->name, strnlen(rs->name, 22));
     s->volume = 64;
     s->finetune = 0;
     s->loopStart = 0;

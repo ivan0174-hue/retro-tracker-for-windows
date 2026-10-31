@@ -182,7 +182,8 @@ COMPILARE DAI SORGENTI
 I sorgenti (C, nessuna libreria esterna) sono su GitHub:
     https://github.com/ivan0174-hue/retro-tracker-for-windows
 e, nello zip, nella cartella "sorgenti".
-Con MSYS2 (shell "MINGW64") oppure con un cross-compilatore mingw-w64:
+Con MSYS2 (shell "UCRT64", pacchetto mingw-w64-ucrt-x86_64-gcc) oppure con
+un cross-compilatore mingw-w64:
     sh build.sh
 Il risultato e' build/PT8.exe.
 Nota tecnica: con toolchain basate su LLVM 18 o precedente, la libreria

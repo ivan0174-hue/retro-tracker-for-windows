@@ -85,8 +85,8 @@ Serve un compilatore **mingw-w64**. Su Windows il modo più semplice è
 [MSYS2](https://www.msys2.org/):
 
 ```sh
-# nella shell "MSYS2 MINGW64"
-pacman -S --needed mingw-w64-x86_64-gcc
+# nella shell "MSYS2 UCRT64"
+pacman -S --needed mingw-w64-ucrt-x86_64-gcc
 sh build.sh
 ```
 
@@ -113,8 +113,8 @@ make -C tests check
 - `uiharness`: genera screenshot dell'interfaccia senza Windows
 - `wdriver.c`: piccolo programma Windows per pilotare PT8 durante i test (Windows o Wine)
 
-GitHub Actions compila `PT8.exe` con MSYS2 a ogni push, lo avvia su Windows per
-verificare che la finestra si apra e lanci i test qui sopra su Linux.
+A ogni push GitHub Actions compila `PT8.exe` con MSYS2 e lo avvia su Windows per
+verificare che la finestra si apra. Esegue anche i test qui sopra su Linux.
 
 ## Struttura
 

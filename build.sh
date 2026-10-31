@@ -1,6 +1,6 @@
 #!/bin/sh
 # Build PT8.exe with a mingw-w64 toolchain.
-#  - Windows: MSYS2 "MINGW64" shell (pacman -S mingw-w64-x86_64-gcc), then: sh build.sh
+#  - Windows: MSYS2 "UCRT64" shell (pacman -S mingw-w64-ucrt-x86_64-gcc), then: sh build.sh
 #  - Linux/macOS: with a mingw-w64 cross compiler installed, sh build.sh
 set -e
 cd "$(dirname "$0")"

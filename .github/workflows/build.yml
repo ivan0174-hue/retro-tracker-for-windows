@@ -7,16 +7,16 @@ on:
 
 jobs:
   windows:
-    name: Windows (MSYS2 gcc) - build and start
+    name: Windows (MSYS2 UCRT64 gcc) - build and start
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
 
       - uses: msys2/setup-msys2@v2
         with:
-          msystem: MINGW64
+          msystem: UCRT64
           update: false
-          install: mingw-w64-x86_64-gcc
+          install: mingw-w64-ucrt-x86_64-gcc
 
       - name: Build PT8.exe
         shell: msys2 {0}
