@@ -1,0 +1,14 @@
+Workaround for mingw-w64 import libraries generated with llvm-dlltool <= 18.
+
+mingw-w64's msvcrt.def contains lines such as
+    _crt_atexit == atexit
+meaning "import msvcrt.dll's atexit under the symbol name _crt_atexit".
+llvm-dlltool 18 does not understand "==" and emits a weak alias
+_crt_atexit -> atexit instead; atexit is mingw-w64's own wrapper which calls
+_crt_atexit, so every program spins forever at startup (100% CPU, no window).
+Affected x64 symbols: _crt_atexit, __msvcrt_assert, __msvcrt_iswctype,
+_swprintf, _vswprintf, _wcstok, __msvcrt_wcstok_s.
+
+Fix used for PT8: regenerate the import part of libmsvcrt.a from msvcrt.def
+without those 7 lines and add msvcrt_renames.c (which resolves the real
+msvcrt.dll functions at run time) to the archive.

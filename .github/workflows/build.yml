@@ -1,0 +1,64 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    name: Windows (MSYS2 gcc) - build and start
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: false
+          install: mingw-w64-x86_64-gcc
+
+      - name: Build PT8.exe
+        shell: msys2 {0}
+        run: |
+          sh build.sh
+          echo "Imported DLLs:"
+          objdump -p build/PT8.exe | grep "DLL Name"
+          if objdump -p build/PT8.exe | grep -i "DLL Name: lib"; then
+            echo "PT8.exe must not depend on mingw runtime DLLs"; exit 1
+          fi
+
+      - name: Start PT8 and check that the window opens
+        shell: pwsh
+        run: |
+          $exe  = (Resolve-Path build\PT8.exe).Path
+          $demo = (Resolve-Path examples\demo8.mod).Path
+          $log  = Join-Path (Split-Path $exe) 'PT8.log'
+          $p = Start-Process -FilePath $exe -ArgumentList "`"$demo`"" -PassThru
+          $ok = $false
+          for ($i = 0; $i -lt 30 -and -not $ok; $i++) {
+            Start-Sleep -Seconds 1
+            if ($p.HasExited) { break }
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'running \(60 frames drawn\)' -Quiet)) { $ok = $true }
+          }
+          $p.Refresh()
+          Write-Host "Window title: '$($p.MainWindowTitle)'  exited: $($p.HasExited)"
+          if (Test-Path $log) { Get-Content $log } else { Write-Host "no PT8.log" }
+          if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force }
+          if (-not $ok) { Write-Error "PT8 did not start correctly"; exit 1 }
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: PT8-windows-x64
+          path: |
+            build/PT8.exe
+            examples/demo8.mod
+            LEGGIMI.txt
+
+  tests:
+    name: Core and UI tests (Linux, ASan/UBSan)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: make check
+        run: make -C tests check

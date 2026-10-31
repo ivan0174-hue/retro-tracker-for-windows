@@ -1,0 +1,25 @@
+1 ICON "pt8.ico"
+1 24 "pt8.manifest"
+
+1 VERSIONINFO
+FILEVERSION     1,0,1,0
+PRODUCTVERSION  1,0,1,0
+FILEOS          0x40004
+FILETYPE        0x1
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    BEGIN
+      VALUE "FileDescription", "PT8 - 8 channel ProTracker style tracker"
+      VALUE "FileVersion", "1.0.1"
+      VALUE "ProductName", "PT8"
+      VALUE "ProductVersion", "1.0.1"
+      VALUE "OriginalFilename", "PT8.exe"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1200
+  END
+END

@@ -1,0 +1,195 @@
+PT8 - TRACKER IN STILE PROTRACKER A 8 CANALI (WINDOWS)
+=======================================================
+Versione 1.0.1
+
+PT8 riproduce l'aspetto e il modo di lavorare di ProTracker 2.3D per PC
+(il "pt2-clone"), ma con 8 canali invece di 4. Il replayer segue la logica
+originale di ProTracker 2.3D (comprese le sue famose stranezze) ed e' stato
+verificato tick per tick contro la libreria di riferimento libxmp.
+
+
+NOVITA' DELLA 1.0.1
+-------------------
+- Corretto il problema per cui PT8 restava in memoria senza aprire la
+  finestra (la versione 1.0 si bloccava all'avvio a causa di un difetto
+  nella libreria di sistema usata per compilarla). Ora la finestra si apre
+  normalmente.
+- La finestra viene mostrata prima di aprire la scheda audio.
+- Se qualcosa va storto, PT8 scrive cosa e' successo nei file PT8.log e
+  PT8_crash.txt (vedi sotto "SE QUALCOSA NON VA").
+
+
+AVVIO
+-----
+Non serve installare niente: estrai lo zip e fai doppio clic su PT8.exe.
+Funziona su Windows 7, 8, 10 e 11 (64 bit).
+
+Il programma non e' firmato digitalmente, quindi la prima volta Windows
+potrebbe mostrare "Windows ha protetto il PC": clicca "Ulteriori informazioni"
+e poi "Esegui comunque".
+
+Per una prima prova: premi LOAD MOD, apri demo8.mod (un brano dimostrativo
+a 8 canali incluso nello zip) e premi PLAY. Puoi anche trascinare un file
+.mod o un campione direttamente nella finestra.
+
+
+LO SCHERMO
+----------
+In alto a sinistra:  posizione nel brano (POS), pattern in quella posizione,
+                     lunghezza del brano, e i dati del campione corrente
+                     (finetune, volume, lunghezza, inizio e lunghezza del loop).
+                     Tasto sinistro sulle frecce = +1/-1, tasto destro = veloce.
+Al centro:           i pulsanti come in ProTracker (PLAY, PATTERN, EDIT,
+                     RECORD, STOP, CLEAR, EDIT OP., SAMPLER, POS ED. ...).
+In alto a destra:    8 oscilloscopi (clic = mute del canale, tasto destro = solo).
+In basso:            l'editor dei pattern con 8 canali.
+
+Ogni cella mostra:   NOTA  CAMPIONE  EFFETTO     es.  C-3 01 A0F
+                     (campione ed effetto in esadecimale, come in ProTracker)
+
+
+TASTI PRINCIPALI (il menu HELP li mostra anche nel programma)
+-------------------------------------------------------------
+Spazio              Stop se sta suonando, altrimenti attiva/disattiva EDIT
+Alt destro  / F6    Suona il brano
+Ctrl destro / F7    Suona il pattern corrente
+Shift destro / F8   Registra (suona il pattern con EDIT attivo)
+Shift+F6 / F7       Suona dalla riga del cursore
+F1 / F2             Ottava bassa / alta della tastiera
+Z S X D C V ...     Note (ottava bassa), come una tastiera di pianoforte
+Q 2 W 3 E R ...     Note (ottava alta)
+0-9, A-F            Numero campione ed effetto (sulle colonne relative)
+Frecce              Muovono il cursore
+Tab / Shift+Tab     Canale successivo / precedente
+Pag Su / Pag Giu    16 righe su / giu
+F9 F10 F11 F12      Vai alla riga 0 / 16 / 32 / 48
+Canc                Cancella nota+campione oppure effetto (secondo la colonna)
+Shift+Canc          Cancella l'intera cella
+Backspace           Elimina la riga sopra il cursore (Shift = tutti i canali)
+Ins                 Inserisce una riga vuota (Shift = tutti i canali)
+Shift+F3 / F4 / F5  Taglia / copia / incolla la traccia
+Alt+F3 / F4 / F5    Taglia / copia / incolla il pattern
+Ctrl+F3 / F4 / F5   Taglia / copia / incolla solo gli effetti della traccia
+Ctrl+Z / Ctrl+Y     Annulla / ripristina
+Ctrl+Sinistra/Destra   Pattern precedente / successivo nella posizione
+Alt+Sinistra/Destra    Posizione precedente / successiva
+Ctrl+Su/Giu, Num +/-   Campione successivo / precedente
+Ctrl+0 ... Ctrl+9   Edit skip (di quante righe scende il cursore)
+Alt+1 ... Alt+8     Mute del canale 1...8
+Ctrl+O / Ctrl+S     Apri / salva modulo (Ctrl+Shift+S = salva con nome)
+Ctrl+L              Carica un campione nello slot corrente
+Ctrl+E              Esporta il brano in WAV
+Alt+Invio           Schermo intero
+Esc                 Chiude pannelli e schermate
+
+Le note si inseriscono solo in modalita' EDIT (barra rossa). Senza EDIT
+i tasti delle note suonano semplicemente il campione ("jam").
+Con RECORD le note vanno nella riga che sta suonando.
+Nota: i tasti delle note sono "posizionali", quindi funzionano anche con
+la tastiera italiana.
+
+
+EFFETTI (identici a ProTracker)
+-------------------------------
+0xy Arpeggio            8xx Panning (non in PT originale, vedi SETUP)
+1xx Portamento su       9xx Offset del campione
+2xx Portamento giu      Axy Volume slide
+3xx Portamento a nota   Bxx Salta alla posizione
+4xy Vibrato             Cxx Volume (00-40)
+5xy 3xx + volume slide  Dxx Fine pattern (salta alla riga xx del successivo)
+6xy 4xy + volume slide  Exy Comandi estesi (sotto)
+7xy Tremolo             Fxx Velocita' (01-1F) o BPM (20-FF), F00 = stop
+
+E0x Filtro LED on/off   E1x/E2x Fine portamento su/giu
+E3x Glissando           E4x Forma d'onda vibrato
+E5x Finetune            E6x Loop di pattern
+E7x Forma d'onda tremolo  E8x Panning grossolano
+E9x Ripeti nota         EAx/EBx Fine volume su/giu
+ECx Taglia nota         EDx Ritarda nota
+EEx Ritarda pattern     EFx Inverti loop (funk repeat)
+
+
+SAMPLER
+-------
+Pulsante SAMPLER: mostra la forma d'onda del campione corrente.
+- Trascina con il mouse per selezionare un intervallo, rotellina = zoom,
+  tasto destro = toglie la selezione.
+- Trascina i marcatori verdi in alto per spostare l'inizio/fine del loop.
+- CUT / COPY / PASTE / CROP, REVERSE, NORMALIZE, FADE IN / OUT, CENTER,
+  VOL 50% / 200%, UPSAMPLE / DOWNSAMPLE, LOOP on/off.
+- I tasti delle note suonano il campione.
+
+Formati caricabili: WAV (8/16/24/32 bit, float, mono o stereo), IFF 8SVX,
+AIFF e RAW (8 bit). Lunghezza massima 128 KB come in ProTracker.
+Se il campione ha una frequenza alta (es. 44100 Hz) PT8 chiede se convertirlo
+per farlo suonare alla sua altezza originale su C-3 o su C-2.
+SAVE SMP salva il campione come WAV 8 bit (con il loop).
+
+
+FILE E COMPATIBILITA'
+---------------------
+Carica: moduli M.K., M!K!, FLT4, 4CHN, 6CHN, 8CHN, FLT8 (Startrekker),
+OCTA, CD81/CD61 (Octalyser), FA0x (Digital Tracker), TDZx e i vecchi
+moduli Soundtracker a 15 campioni.
+
+Salva (SAVE MOD / SAVE AS):
+- se i canali 5-8 sono vuoti il brano viene salvato come M.K., cioe' un
+  normale modulo a 4 canali che suona anche in ProTracker su Amiga;
+- altrimenti come 8CHN, il formato a 8 canali letto da OpenMPT,
+  MilkyTracker, FastTracker 2, XMPlay, VLC e quasi tutti i player.
+  (Il ProTracker originale su Amiga non puo' suonare moduli a 8 canali.)
+In SETUP puoi forzare il salvataggio sempre a 8 canali.
+
+EXP. WAV esporta il brano in un file WAV 48 kHz stereo.
+
+
+SETUP
+-----
+STEREO SEPARATION   separazione stereo (Amiga = 100%, default 30%)
+AMPLIFICATION       volume generale (abbassalo se senti distorsione)
+INTERPOLATION       OFF = suono Amiga originale, LINEAR = piu' morbido
+AMIGA MODEL FILTER  A500 (filtro passa-basso fisso, suono piu' caldo) o A1200
+LED FILTER          emula il filtro attivato dall'effetto E0x
+8XX / E8X PANNING   panning per canale (ignorato nei moduli M.K. a 4 canali)
+SAVE FORMAT         AUTO (M.K. o 8CHN) oppure sempre 8CHN
+FOLLOW PLAYBACK     l'editor segue la riproduzione
+
+Le impostazioni vengono salvate in PT8.ini accanto all'eseguibile.
+Se l'audio scatta, apri PT8.ini e aumenta "audiobuffer" (es. 1024).
+
+
+SE QUALCOSA NON VA
+------------------
+Ad ogni avvio PT8 scrive un piccolo file PT8.log accanto a PT8.exe (o nella
+cartella temporanea di Windows se quella cartella non e' scrivibile), con le
+fasi dell'avvio. Se il programma si chiude per un errore compare un messaggio
+e i dettagli finiscono in PT8_crash.txt. Mandami questi file e capisco subito
+dove sta il problema.
+
+
+DIFFERENZE RISPETTO A PROTRACKER
+--------------------------------
+- 8 canali (disposti L R R L L R R L come su FastTracker).
+- I file si aprono e si salvano con le normali finestre di Windows invece
+  del "Disk Op." interno.
+- Annulla/ripristina (Ctrl+Z / Ctrl+Y) per le modifiche ai pattern.
+- I moduli 8CHN creati con FastTracker 2 che usano ottave fuori dal range
+  di ProTracker (C-0, C-4) vengono suonati correttamente.
+
+
+COMPILARE DAI SORGENTI
+----------------------
+I sorgenti (C, nessuna libreria esterna) sono su GitHub:
+    https://github.com/ivan0174-hue/retro-tracker-for-windows
+e, nello zip, nella cartella "sorgenti".
+Con MSYS2 (shell "MINGW64") oppure con un cross-compilatore mingw-w64:
+    sh build.sh
+Il risultato e' build/PT8.exe.
+Nota tecnica: con toolchain basate su LLVM 18 o precedente, la libreria
+libmsvcrt.a generata da llvm-dlltool e' difettosa (atexit() richiama se
+stessa e ogni programma si blocca all'avvio). La cartella
+tools/crtfix contiene la correzione usata per compilare questa versione.
+Con gcc di MSYS2 il problema non esiste.
+
+Il font 8x8 e' di Daniel Hepper (pubblico dominio).
+Omaggio agli autori di ProTracker e a tutta la scena Amiga.

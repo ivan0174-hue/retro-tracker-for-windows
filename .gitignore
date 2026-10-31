@@ -1,0 +1,9 @@
+build/
+build14/
+tests/build/
+tests/build-*/
+*.o
+*.exe
+PT8.ini
+PT8.log
+PT8_crash.txt
